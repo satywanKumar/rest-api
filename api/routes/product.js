@@ -77,7 +77,7 @@ router.post('/',(req,res,next)=>{
       price:req.body.price,
       description:req.body.description,
       productCode:req.body.productCode,
-      imagePath:result.url
+      photo:result.url
     });
     myproduct.save()
     .then(result=>{

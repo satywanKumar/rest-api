@@ -15,7 +15,7 @@ cloudinary.config({
 // get all products
 router.get('/',(req,res,next)=>{
   Product.find()
-  .select('_id title productCode description price ctgry imagePath')
+  .select('_id title productCode description price ctgry photo')
   .then(result=>{
     res.status(200).json({
       product:result
@@ -33,7 +33,7 @@ router.get('/',(req,res,next)=>{
 router.get('/:id',(req,res,next)=>{
   const _id = req.params.id;
   Product.findById(_id)
-  .select('_id title productCode description price ctgry imagePath')
+  .select('_id title productCode description price ctgry photo')
   .then(result=>{
     // console.log(result)
     res.status(200).json({

@@ -99,26 +99,31 @@ router.post('/',(req,res,next)=>{
 // update
 router.put('/:id',(req,res,next)=>{
   console.log(req.params.id);
-  Product.findOneAndUpdate({_id:req.params.id},{
-    $set:{
-      title:req.body.title,
-      ctgry:req.body.ctgry,
-      price:req.body.price,
-      description:req.body.description,
-      productCode:req.body.productCode
-    }
-  })
-  .then(result=>{
-    res.status(200).json({
-      updated_product:result
+  const file = req.files.photo;
+  cloudinary.uploader.upload(file.tempFilePath,(err,result)=>{
+    Product.findOneAndUpdate({_id:req.params.id},{
+      $set:{
+        title:req.body.title,
+        ctgry:req.body.ctgry,
+        price:req.body.price,
+        description:req.body.description,
+        productCode:req.body.productCode,
+        photo:result.url
+      }
+    })
+    .then(result=>{
+      res.status(200).json({
+        updated_product:result
+      })
+    })
+    .catch(err=>{
+      console.log(err);
+      res.status(500).json({
+        error:err
+      })
     })
   })
-  .catch(err=>{
-    console.log(err);
-    res.status(500).json({
-      error:err
-    })
-  })
+
 })
 
 

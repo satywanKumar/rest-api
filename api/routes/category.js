@@ -57,6 +57,55 @@ router.post('/',(req,res,next)=>{
     });
   
   })
+
+  //get single category by id
+router.get('/:id',(req,res,next)=>{
+  const _id = req.params.id;
+  Category.findById(_id)
+  .select('_id name photo')
+  .then(result=>{
+    // console.log(result)
+    res.status(200).json({
+      category:result
+    })
+  })
+  .catch(err=>{
+    console.log(err);
+    res.status(500).json({
+      error:err
+    })
+  })
+})
+
+
+  // update
+router.put('/:id',(req,res,next)=>{
+  console.log(req.params.id);
+  const file = req.files.photo;
+  console.log(file);
+  cloudinary.uploader.upload(file.tempFilePath,(err,result)=>{
+    console.log(result);
+    Category.findOneAndUpdate({_id:req.params.id},{
+      $set:{
+        name:req.body.name,
+        photo:result.url
+      }
+    })
+    .then(result=>{
+      res.status(200).json({
+        updated_category:result
+      })
+    })
+    .catch(err=>{
+      console.log(err);
+      res.status(500).json({
+        error:err
+      })
+    })
+  })
+
+})
+
   
 
 router.delete('/:id',(req,res,next)=>{

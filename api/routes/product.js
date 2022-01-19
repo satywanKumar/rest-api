@@ -100,7 +100,9 @@ router.post('/',(req,res,next)=>{
 router.put('/:id',(req,res,next)=>{
   console.log(req.params.id);
   const file = req.files.photo;
+  console.log(file);
   cloudinary.uploader.upload(file.tempFilePath,(err,result)=>{
+    console.log(result);
     Product.findOneAndUpdate({_id:req.params.id},{
       $set:{
         title:req.body.title,

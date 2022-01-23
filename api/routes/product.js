@@ -128,6 +128,16 @@ router.put('/:id',(req,res,next)=>{
 
 })
 
+// get last 6 project 
+router.get('/data/recent',(req,res,next)=>{
+  Product.find().sort({$natural: -1 }).limit(6)
+  .then(result=>{
+    res.status(200).json({
+      student:result
+    })
+  })
+})
+
 
 router.delete('/:productId',(req,res,next)=>{
 

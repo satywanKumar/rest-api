@@ -21,11 +21,15 @@ router.post('/signup',(req,res,next)=>{
     {
         const user = new User({
         _id:new mongoose.Types.ObjectId,
-        username:req.body.username,
+        firtName:req.body.firstName,
+        lastName:req.body.lastName,
         password:hash,
         email:req.body.email,
         phone:req.body.phone,
-        userType:req.body.userType
+        address:req.body.address,
+        city:req.body.city,
+        state:req.body.state,
+        pin:req.body.pin
       })
 
       user.save()

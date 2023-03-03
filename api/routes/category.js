@@ -6,9 +6,9 @@ const cloudinary = require('cloudinary').v2;
 
 
 cloudinary.config({
-    cloud_name:'dqpfadgjp',
-    api_key:'482984841652561',
-    api_secret:'Z4Uv3LtWKbd0U78TgLG6LRhCtWU'
+    cloud_name:'',
+    api_key:'',
+    api_secret:''
   });
 
 
@@ -108,21 +108,46 @@ router.put('/:id',(req,res,next)=>{
 
   
 
-router.delete('/:id',(req,res,next)=>{
-    console.log(req.params.id);
-    Category.findByIdAndRemove(req.params.id)
-    .then(result=>{
-        res.status(200).json({
-            message:'category deleted',
-            result:result
-        })
-    })
-    .catch(err=>{
-        console.log(err);
-        res.status(500).json({
-            error:err
-        })
-    })
+// router.delete('/:id',(req,res,next)=>{
+//     console.log(req.params.id);
+//     Category.findByIdAndRemove(req.params.id)
+//     .then(result=>{
+//         res.status(200).json({
+//             message:'category deleted',
+//             result:result
+//         })
+//     })
+//     .catch(err=>{
+//         console.log(err);
+//         res.status(500).json({
+//             error:err
+//         })
+//     })
+// })
+router.delete('/', (req, res, next) => {
+  const imageUrl = req.query.imageUrl;
+  const urlArray = imageUrl.split('/');
+  console.log(urlArray)
+  const image = urlArray[urlArray.length - 1]
+  console.log(image)
+  const imageName = image.split('.')[0]
+  console.log(imageName)
+  categoryId = req.query.id;
+  Category.remove({ _id: categoryId })
+      .then(result => {
+          cloudinary.uploader.destroy(imageName,(error,result)=>{
+              console.log(error,result);
+          })
+          res.status(200).json({
+              message: result
+          })
+      })
+      .catch(err => {
+          console.log(err);
+          res.status(500).json({
+              error: err
+          })
+      })
 })
 
 

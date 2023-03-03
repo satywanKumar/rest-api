@@ -10,7 +10,7 @@ const cors = require('cors');
 const fileUpload = require('express-fileupload');
 
 
-mongoose.connect('mongodb+srv://sribstech:satywan123@sribstech.gpk49.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',{useNewUrlParser:true, useUnifiedTopology: true});
+mongoose.connect('',{useNewUrlParser:true, useUnifiedTopology: true});
 
 mongoose.connection.on('error',err=>{
   console.log('connection failed');

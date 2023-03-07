@@ -6,9 +6,9 @@ const cloudinary = require('cloudinary').v2;
 
 
 cloudinary.config({
-  cloud_name:'dmap97ds2',
-  api_key:'392635253424173',
-  api_secret:'UwIU2QdVR_S7KCsxfnxKEtLJ64k'
+  cloud_name:'',
+  api_key:'',
+  api_secret:''
 });
 
 

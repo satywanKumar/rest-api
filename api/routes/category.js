@@ -3,18 +3,18 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const Category = require('../model/category');
 const cloudinary = require('cloudinary').v2;
+const checkAuth = require('../middleware/check-auth');
 
 
 cloudinary.config({
-  cloud_name:'',
-  api_key:'',
-  api_secret:''
-});
+    cloud_name:'dmap97ds2',
+    api_key:'392635253424173',
+    api_secret:'UwIU2QdVR_S7KCsxfnxKEtLJ64k'
+  });
 
 
 
-
-router.get('/',(req,res,next)=>{
+router.get('/',checkAuth,(req,res,next)=>{
     Category.find()
     .select(' _id name photo')
     .then(result=>{
@@ -31,7 +31,7 @@ router.get('/',(req,res,next)=>{
 })
 
 // save category
-router.post('/',(req,res,next)=>{
+router.post('/',checkAuth,(req,res,next)=>{
     console.log(req);
     console.log(req.files);
     const file = req.files.photo;
@@ -60,7 +60,7 @@ router.post('/',(req,res,next)=>{
   })
 
   //get single category by id
-router.get('/:id',(req,res,next)=>{
+router.get('/:id',checkAuth,(req,res,next)=>{
   const _id = req.params.id;
   Category.findById(_id)
   .select('_id name photo')
@@ -80,7 +80,7 @@ router.get('/:id',(req,res,next)=>{
 
 
   // update
-router.put('/:id',(req,res,next)=>{
+router.put('/:id',checkAuth,(req,res,next)=>{
   console.log(req.params.id);
   const file = req.files.photo;
   console.log(file);
@@ -125,7 +125,7 @@ router.put('/:id',(req,res,next)=>{
 //         })
 //     })
 // })
-router.delete('/', (req, res, next) => {
+router.delete('/',checkAuth, (req, res, next) => {
   const imageUrl = req.query.imageUrl;
   const urlArray = imageUrl.split('/');
   console.log(urlArray)

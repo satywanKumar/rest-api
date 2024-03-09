@@ -13,7 +13,7 @@ cloudinary.config({
 
 
 // get all products
-router.get('/',(req,res,next)=>{
+router.get('/',checkAuth,(req,res,next)=>{
   Product.find()
   .select('_id title productCode description price ctgry photo')
   .then(result=>{
@@ -30,7 +30,7 @@ router.get('/',(req,res,next)=>{
 });
 
 //get single product by id
-router.get('/:id',(req,res,next)=>{
+router.get('/:id',checkAuth,(req,res,next)=>{
   const _id = req.params.id;
   Product.findById(_id)
   .select('_id title productCode description price ctgry photo')
@@ -49,7 +49,7 @@ router.get('/:id',(req,res,next)=>{
 })
 
 // return data by category
-router.get('/cat/:ctgry',(req,res,next)=>{
+router.get('/cat/:ctgry',checkAuth,(req,res,next)=>{
   Product.find({ctgry:req.params.ctgry})
   .then(result=>{
     res.status(200).json({
@@ -64,7 +64,7 @@ router.get('/cat/:ctgry',(req,res,next)=>{
   })
 })
 // save product
-router.post('/',(req,res,next)=>{
+router.post('/',checkAuth,(req,res,next)=>{
   console.log(req);
   console.log(req.files);
   const file = req.files.photo;
@@ -97,7 +97,7 @@ router.post('/',(req,res,next)=>{
 })
 
 // update
-router.put('/:id',(req,res,next)=>{
+router.put('/:id',checkAuth,(req,res,next)=>{
   console.log(req.params.id);
   const file = req.files.photo;
   console.log(file);
@@ -129,7 +129,7 @@ router.put('/:id',(req,res,next)=>{
 })
 
 // get last 6 project 
-router.get('/data/recent',(req,res,next)=>{
+router.get('/data/recent',checkAuth,(req,res,next)=>{
   Product.find().sort({$natural: -1 }).limit(6)
   .then(result=>{
     res.status(200).json({
@@ -139,7 +139,7 @@ router.get('/data/recent',(req,res,next)=>{
 })
 
 
-router.delete('/:productId',(req,res,next)=>{
+router.delete('/:productId',checkAuth,(req,res,next)=>{
 
   Product.remove({_id:req.params.productId})
   .then(result=>{

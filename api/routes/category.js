@@ -7,9 +7,9 @@ const checkAuth = require('../middleware/check-auth');
 
 
 cloudinary.config({
-    cloud_name:'dmap97ds2',
-    api_key:'392635253424173',
-    api_secret:'UwIU2QdVR_S7KCsxfnxKEtLJ64k'
+    cloud_name:'dm2',
+    api_key:'39263',
+    api_secret:'UwIU64k'
   });
 
 
